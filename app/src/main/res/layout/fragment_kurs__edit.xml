@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".kurs.Kurs_EditFragment">
+
+    <TextView
+        android:id="@+id/sozla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30sp"
+        android:layout_marginTop="30sp"
+        android:textSize="20sp"
+        android:text="Sozlamalar"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/rasm"
+        android:layout_width="125dp"
+        android:layout_marginTop="25sp"
+        android:layout_height="90dp"
+        app:layout_constraintTop_toBottomOf="@id/sozla"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/image"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/add_tekst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30sp"
+        android:layout_marginTop="30sp"
+        android:gravity="center"
+        android:text="Kursga boshqa rasm qo'shish"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rasm" />
+
+
+    <EditText
+        android:id="@+id/kurs_name"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/tahrirlash"
+        android:backgroundTint="#D1D0D0"
+        android:ems="10"
+        android:hint="Kurs nomi"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:textColorHint="#A8A3A3"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_tekst" />
+
+    <ImageView
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/settings_back"
+        android:padding="15dp"
+        android:src="@drawable/ic_checked"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kurs_name" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
