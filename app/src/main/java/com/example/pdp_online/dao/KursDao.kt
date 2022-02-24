@@ -10,6 +10,9 @@ interface KursDao {
     @Query("select * from kurs")
     fun getAllKurs(): Flowable<List<Kurs>>
 
+    @Query("select * from kurs")
+    fun getAllCourse(): List<Kurs>
+
     @Insert
     fun addKurs(kurs: Kurs)
 

@@ -11,7 +11,10 @@ interface ModulDao {
     @Query("select * from modul")
     fun getAllModule(): Flowable<List<Modul>>
 
-    @Query("select * from modul where mo_kurs=:kursId")
+    @Query("select * from modul")
+    fun getAllMainModule(): List<Modul>
+
+    @Query("select * from modul where mo_kurs=:kursId order by mo_orni")
     fun getModuleByKursId(kursId: Int): Flowable<List<Modul>>
 
 

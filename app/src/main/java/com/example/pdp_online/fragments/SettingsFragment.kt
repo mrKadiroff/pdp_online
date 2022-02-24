@@ -28,6 +28,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -38,6 +39,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,6 +72,8 @@ class SettingsFragment : Fragment() {
     private var fileAbsolutePath: String? = null
 
     private lateinit var kursAdapter: KursAdapter
+
+    lateinit var kurslist: List<Kurs>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,6 +81,11 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSettingsBinding.inflate(inflater,container,false)
         appDatabase = AppDatabase.getInstance(binding.root.context)
+
+
+
+
+
 
         binding.rasm.setOnClickListener {
             setPhoto()
@@ -220,12 +229,39 @@ class SettingsFragment : Fragment() {
                 fileAbsolutePath = file.absolutePath
 
 
+                var same = false
                 binding.floatingActionButton.setOnClickListener {
+                    kurslist = appDatabase.kursDao().getAllCourse() as ArrayList<Kurs>
+                    val kursName = binding.kursName.text.toString().trim()
+
+
                     val kurs = Kurs()
                     kurs.kr_image = fileAbsolutePath
-                    kurs.kr_name = binding.kursName.text.toString()
-                    appDatabase.kursDao().addKurs(kurs)
-                    binding.kursName.setText("")
+                    kurs.kr_name = kursName
+
+                    if (kursName.isNotEmpty()){
+                        for(i in 0 until kurslist.size){
+                            if (kurslist[i].kr_name == kursName){
+                                same = true
+                                break
+                            }
+                        }
+                        if (!same){
+                            Observable.fromCallable {
+                                appDatabase.kursDao().addKurs(kurs)
+                            }.subscribe{
+                                Toast.makeText(binding.root.context, "added", Toast.LENGTH_SHORT).show()
+                                binding.kursName.setText("")
+
+                            }
+                        }else{
+                            Toast.makeText(binding.root.context, "Bunday nomli kurs bor!!", Toast.LENGTH_SHORT).show()
+                            same=false
+                        }
+                    }else{
+                        Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
 
@@ -303,40 +339,44 @@ class SettingsFragment : Fragment() {
             val AbsolutePath = file.absolutePath
             val fileInputStream = FileInputStream(file)
 
+
+
+
+
+            var same = false
             binding.floatingActionButton.setOnClickListener {
+                kurslist = appDatabase.kursDao().getAllCourse() as ArrayList<Kurs>
+                val kursName = binding.kursName.text.toString().trim()
+
+
                 val kurs = Kurs()
                 kurs.kr_image = AbsolutePath
-                kurs.kr_name = binding.kursName.text.toString()
-                Observable.fromCallable {
-                    appDatabase.kursDao().addKurs(kurs)
-                }.subscribe{
-                    Toast.makeText(binding.root.context, "added", Toast.LENGTH_SHORT).show()
-                    binding.kursName.setText("")
+                kurs.kr_name = kursName
 
+                if (kursName.isNotEmpty()){
+                    for(i in 0 until kurslist.size){
+                        if (kurslist[i].kr_name == kursName){
+                            same = true
+                            break
+                        }
+                    }
+                    if (!same){
+                        Observable.fromCallable {
+                            appDatabase.kursDao().addKurs(kurs)
+                        }.subscribe{
+                            Toast.makeText(binding.root.context, "added", Toast.LENGTH_SHORT).show()
+                            binding.kursName.setText("")
+
+                        }
+                    }else{
+                        Toast.makeText(binding.root.context, "Bunday nomli kurs bor!!", Toast.LENGTH_SHORT).show()
+                        same=false
+                    }
+                }else{
+                    Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
                 }
 
             }
-
-//            kursAdapter = KursAdapter()
-//
-//
-//
-//            appDatabase.kursDao().getAllKurs()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object: Consumer<List<Kurs>> {
-//                    override fun accept(t: List<Kurs>?) {
-//                        kursAdapter.submitList(t)
-//                    }
-//
-//                }, object : Consumer<Throwable>{
-//                    override fun accept(t: Throwable?) {
-//
-//                    }
-//
-//                })
-//            binding.rv.adapter = kursAdapter
-
 
 
 

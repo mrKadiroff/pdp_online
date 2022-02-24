@@ -1,18 +1,19 @@
-package com.example.pdp_online.fragments
+package com.example.pdp_online.main
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pdp_online.R
-import com.example.pdp_online.adapter.CourseAdapter
-import com.example.pdp_online.adapter.ModuleHorizAdapter
+import com.example.pdp_online.adapter.ModuleMainAdapter
 import com.example.pdp_online.database.AppDatabase
 import com.example.pdp_online.databinding.FragmentHomeBinding
+import com.example.pdp_online.databinding.FragmentModuleMainBinding
 import com.example.pdp_online.entity.Kurs
+import com.example.pdp_online.entity.Lesson
+import com.example.pdp_online.entity.Modul
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
@@ -24,10 +25,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
+ * Use the [ModuleMainFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class ModuleMainFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -39,37 +40,36 @@ class HomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
-    lateinit var binding: FragmentHomeBinding
+    lateinit var binding: FragmentModuleMainBinding
     lateinit var appDatabase: AppDatabase
-    lateinit var courseAdapter: CourseAdapter
-    lateinit var moduleHorizAdapter: ModuleHorizAdapter
+    lateinit var moduleMainAdapter: ModuleMainAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
+        binding = FragmentModuleMainBinding.inflate(layoutInflater,container,false)
         appDatabase = AppDatabase.getInstance(binding.root.context)
 
+        val kursss= arguments?.getSerializable("main") as Kurs
+
+        binding.tema.text = kursss.kr_name
 
 
-
-        courseAdapter = CourseAdapter(object:CourseAdapter.OnItemClickListener{
-            override fun onItemClick(kurs: Kurs) {
+        moduleMainAdapter = ModuleMainAdapter(kursss,object :ModuleMainAdapter.OnItemClickListener{
+            override fun onItemClick(modul: Modul) {
                 var bundle = Bundle()
-                bundle.putSerializable("main",kurs)
-                findNavController().navigate(R.id.moduleMainFragment,bundle)
+                bundle.putSerializable("horizon",modul)
+                findNavController().navigate(R.id.darsFragment,bundle)
             }
 
         })
-
-        appDatabase.kursDao().getAllKurs()
+        appDatabase.modulDao().getModuleByKursId(kursss.id!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object: Consumer<List<Kurs>> {
-                override fun accept(t: List<Kurs>?) {
-                    courseAdapter.submitList(t)
+            .subscribe(object: Consumer<List<Modul>> {
+                override fun accept(t: List<Modul>?) {
+                    moduleMainAdapter.submitList(t)
                 }
 
             }, object : Consumer<Throwable> {
@@ -78,11 +78,9 @@ class HomeFragment : Fragment() {
                 }
 
             })
-        binding.rvKurs.adapter = courseAdapter
+        binding.rvmodule.adapter = moduleMainAdapter
 
-        binding.settings.setOnClickListener {
-            findNavController().navigate(R.id.settingsFragment)
-        }
+
 
 
         return binding.root
@@ -95,12 +93,12 @@ class HomeFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
+         * @return A new instance of fragment ModuleMainFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
+            ModuleMainFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

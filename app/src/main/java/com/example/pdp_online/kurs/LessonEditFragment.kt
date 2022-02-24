@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.pdp_online.R
 import com.example.pdp_online.database.AppDatabase
@@ -38,6 +39,8 @@ class LessonEditFragment : Fragment() {
 
     lateinit var binding: FragmentLessonEditBinding
     lateinit var appDatabase: AppDatabase
+
+    lateinit var lessonlist: List<Lesson>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,12 +58,34 @@ class LessonEditFragment : Fragment() {
 
     private fun updateLesson() {
         val lesson = arguments?.getSerializable("edit") as Lesson
+        var same = false
         binding.floatingActionButton.setOnClickListener {
-            lesson.lesson_name = binding.lessonName.text.toString().trim()
-            lesson.lesson_description = binding.lessonInfo.text.toString().trim()
-            lesson.lesson_position = binding.lessonPosition.text.toString().trim()
-            appDatabase.lessonDao().updateLesson(lesson)
-            findNavController().popBackStack()
+            lessonlist = appDatabase.lessonDao().getAllLesson() as ArrayList<Lesson>
+            val lessonname = binding.lessonName.text.toString().trim()
+
+            if (binding.lessonName.text.toString().isNotEmpty() && binding.lessonInfo.text.toString().isNotEmpty()&& binding.lessonPosition.text.toString().isNotEmpty()){
+                for (i in 0 until lessonlist.size){
+                    if (lessonlist[i].lesson_name == lessonname){
+                        same = true
+                        break
+                    }
+                }
+                if (!same){
+                    lesson.lesson_name = binding.lessonName.text.toString().trim()
+                    lesson.lesson_description = binding.lessonInfo.text.toString().trim()
+                    lesson.lesson_position = binding.lessonPosition.text.toString().toInt()
+                    appDatabase.lessonDao().updateLesson(lesson)
+                    findNavController().popBackStack()
+                }else{
+                    Toast.makeText(binding.root.context, "Bunday nomli dars bor!!", Toast.LENGTH_SHORT).show()
+                    same=false
+                }
+            }else{
+                Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
+            }
+
+
+
         }
     }
 
@@ -69,7 +94,7 @@ class LessonEditFragment : Fragment() {
         binding.kurs.text = "${lesson.lesson_position}-dars"
         binding.lessonName.setText(lesson.lesson_name)
         binding.lessonInfo.setText(lesson.lesson_description)
-        binding.lessonPosition.setText(lesson.lesson_position)
+        binding.lessonPosition.setText(lesson.lesson_position.toString())
 
     }
 

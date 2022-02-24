@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.pdp_online.R
 import com.example.pdp_online.database.AppDatabase
@@ -38,6 +39,7 @@ class EditModuleFragment : Fragment() {
 
     lateinit var binding: FragmentEditModuleBinding
     lateinit var appDatabase: AppDatabase
+    lateinit var modullist: List<Modul>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,15 +54,47 @@ class EditModuleFragment : Fragment() {
         return binding.root
     }
 
+
+    var same = false
     private fun updateModul() {
         val modul= arguments?.getSerializable("modu") as Modul
         val kurss= arguments?.getSerializable("qurs") as Kurs
         binding.floatingActionButton.setOnClickListener {
-            modul.mod_name = binding.modulName.text.toString().trim()
-            modul.mod_position = binding.modulPosition.text.toString().trim()
-//            modul.mod_image = kurss.kr_image
-           appDatabase.modulDao().updateModul(modul)
-            findNavController().popBackStack()
+
+            binding.floatingActionButton.setOnClickListener {
+                modullist = appDatabase.modulDao().getAllMainModule() as ArrayList<Modul>
+                val modName = binding.modulName.text.toString().trim()
+
+                if (binding.modulName.text.toString().isNotEmpty() && binding.modulPosition.text.toString().isNotEmpty()){
+                    for (i in 0 until modullist.size){
+                        if (modullist[i].mod_name == modName){
+                            same = true
+                            break
+                        }
+                    }
+                    if (!same){
+                        modul.mod_name = binding.modulName.text.toString()
+                        modul.mod_position = binding.modulPosition.text.toString().toInt()
+                        appDatabase.modulDao().updateModul(modul)
+                        findNavController().popBackStack()
+                    }else{
+                        Toast.makeText(binding.root.context, "Bunday nomli modul bor!!", Toast.LENGTH_SHORT).show()
+                        same=false
+                    }
+                }else{
+                    Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+
+
+
+
+
+
+
+
         }
     }
 
@@ -68,7 +102,7 @@ class EditModuleFragment : Fragment() {
         val modul= arguments?.getSerializable("modu") as Modul
         binding.kurs.text = modul.mod_name
         binding.modulName.setText(modul.mod_name)
-        binding.modulPosition.setText(modul.mod_position)
+        binding.modulPosition.setText(modul.mod_position!!.toString())
     }
 
     companion object {

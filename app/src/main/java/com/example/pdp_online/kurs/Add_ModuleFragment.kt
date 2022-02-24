@@ -47,6 +47,8 @@ class Add_ModuleFragment : Fragment() {
     lateinit var binding: FragmentAddModuleBinding
     lateinit var appDatabase: AppDatabase
     private lateinit var moduleAdapter: ModuleAdapter
+
+    lateinit var modullist: List<Modul>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -130,20 +132,41 @@ class Add_ModuleFragment : Fragment() {
         val course = arguments?.getSerializable("shit") as Kurs
         binding.kurs.text = course.kr_name
 
+        var same = false
         binding.floatingActionButton.setOnClickListener {
-            val modul = Modul()
-            modul.mod_name = binding.modulName.text.toString().trim()
-            modul.mod_position = binding.modulPosition.text.toString()
-            modul.mod_image = course.kr_image
-            modul.mod_course = course.id
-            Observable.fromCallable {
-                appDatabase.modulDao().addModul(modul)
-            }.subscribe{
-                Toast.makeText(binding.root.context, "added", Toast.LENGTH_SHORT).show()
-                binding.modulName.setText("")
-                binding.modulPosition.setText("")
+            modullist = appDatabase.modulDao().getAllMainModule() as ArrayList<Modul>
+            val modName = binding.modulName.text.toString().trim()
+
+            if (binding.modulName.text.toString().isNotEmpty()&& binding.modulPosition.text.toString().isNotEmpty()){
+                for (i in 0 until modullist.size){
+                    if (modullist[i].mod_name == modName){
+                        same = true
+                        break
+                    }
+                }
+                if (!same){
+
+                    val modPosit = binding.modulPosition.text.toString().toInt()
+                    val modul = Modul()
+                    modul.mod_name = modName
+                    modul.mod_position = modPosit
+                    modul.mod_image = course.kr_image
+                    modul.mod_course = course.id
+                    Observable.fromCallable {
+                        appDatabase.modulDao().addModul(modul)
+                    }.subscribe{
+                        Toast.makeText(binding.root.context, "added", Toast.LENGTH_SHORT).show()
+                        binding.modulName.setText("")
+                        binding.modulPosition.setText("")
+                    }
+
+                }else{
+                    Toast.makeText(binding.root.context, "Bunday nomli modul bor!!", Toast.LENGTH_SHORT).show()
+                    same=false
+                }
+            }else{
+                Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
             }
-            binding.kurs.setText("")
 
         }
     }

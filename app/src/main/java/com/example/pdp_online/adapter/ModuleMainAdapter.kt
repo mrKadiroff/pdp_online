@@ -7,33 +7,28 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdp_online.databinding.KursListBinding
+import com.example.pdp_online.databinding.MainModulListBinding
 import com.example.pdp_online.databinding.ModulListBinding
 import com.example.pdp_online.entity.Kurs
 import com.example.pdp_online.entity.Modul
 
-class ModuleAdapter(var kurs: Kurs,var onItemClickListener: OnItemClickListener) : ListAdapter<Modul, ModuleAdapter.Vh>(MyDiffUtil()){
+class ModuleMainAdapter(var kurs: Kurs, var onItemClickListener: OnItemClickListener) : ListAdapter<Modul, ModuleMainAdapter.Vh>(MyDiffUtil()){
 
-    inner class Vh(var modulListBinding: ModulListBinding) : RecyclerView.ViewHolder(modulListBinding.root) {
+    inner class Vh(var modulListBinding: MainModulListBinding) : RecyclerView.ViewHolder(modulListBinding.root) {
 
         fun onBind(modul: Modul) {
-         modulListBinding.headingffffff.text = modul.mod_name
             modulListBinding.profile.setImageURI(Uri.parse(kurs.kr_image))
+            modulListBinding.headingffffff.text = modul.mod_name
             modulListBinding.moduleSize.text = modul.mod_position.toString()
-
-            modulListBinding.delete.setOnClickListener {
-                onItemClickListener.onItemDeleteClick(modul)
-            }
-            modulListBinding.edit.setOnClickListener {
-                onItemClickListener.onItemEditClick(modul)
-            }
-            modulListBinding.root.setOnClickListener {
+            modulListBinding.kursss.text = kurs.kr_name
+            modulListBinding.batafsil.setOnClickListener {
                 onItemClickListener.onItemClick(modul)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
-        return Vh(ModulListBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return Vh(MainModulListBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
@@ -52,8 +47,6 @@ class ModuleAdapter(var kurs: Kurs,var onItemClickListener: OnItemClickListener)
     }
     interface OnItemClickListener{
         fun onItemClick(modul: Modul)
-        fun onItemDeleteClick(modul: Modul)
-        fun onItemEditClick(modul: Modul)
     }
 
 

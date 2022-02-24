@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="21dp"
+    android:layout_marginEnd="11dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="5dp"
+    app:cardElevation="20sp"
+    app:cardCornerRadius="12dp"
+    android:layout_height="88dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="72dp"
+            android:src="@drawable/chaos"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="9dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="58dp"/>
+
+        <TextView
+            android:id="@+id/headingffffff"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingEnd="6dp"
+            android:text="Android developmentsssssssssssssssssssss"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/module_size"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/profile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.13999999" />
+
+        <TextView
+            android:id="@+id/kursss"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:maxLines="1"
+            android:text="Android developmentsssssssssssssssssssss"
+            android:textSize="14sp"
+            android:ellipsize="end"
+            android:paddingEnd="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/module_size"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/profile"
+            app:layout_constraintTop_toBottomOf="@id/headingffffff"
+            app:layout_constraintVertical_bias="0." />
+
+        <TextView
+            android:id="@+id/batafsil"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:maxLines="1"
+            android:text="Batafsil"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:paddingEnd="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/module_size"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/profile"
+            app:layout_constraintTop_toBottomOf="@id/kursss"
+            app:layout_constraintVertical_bias="0.6" />
+
+
+        <TextView
+            android:id="@+id/module_size"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="12sp"
+            android:background="@drawable/module_count_back"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.38" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

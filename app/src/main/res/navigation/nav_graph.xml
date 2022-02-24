@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_darsFragment"
+            app:destination="@id/darsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_moduleMainFragment"
+            app:destination="@id/moduleMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -62,4 +68,27 @@
         android:name="com.example.pdp_online.kurs.LessonEditFragment"
         android:label="fragment_lesson_edit"
         tools:layout="@layout/fragment_lesson_edit" />
+    <fragment
+        android:id="@+id/darsFragment"
+        android:name="com.example.pdp_online.main.DarsFragment"
+        android:label="fragment_dars"
+        tools:layout="@layout/fragment_dars" >
+        <action
+            android:id="@+id/action_darsFragment_to_lessonChildFragment"
+            app:destination="@id/lessonChildFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lessonChildFragment"
+        android:name="com.example.pdp_online.kurs.LessonChildFragment"
+        android:label="fragment_lesson_child"
+        tools:layout="@layout/fragment_lesson_child" />
+    <fragment
+        android:id="@+id/moduleMainFragment"
+        android:name="com.example.pdp_online.main.ModuleMainFragment"
+        android:label="fragment_module_main"
+        tools:layout="@layout/fragment_module_main" >
+        <action
+            android:id="@+id/action_moduleMainFragment_to_darsFragment"
+            app:destination="@id/darsFragment" />
+    </fragment>
 </navigation>

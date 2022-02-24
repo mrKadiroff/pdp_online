@@ -10,9 +10,11 @@ import io.reactivex.Flowable
 interface LessonDao {
 
 
-    @Query("select * from lesson where dar_modul=:moduleId")
+    @Query("select * from lesson where dar_modul=:moduleId order by dars_orni")
     fun getLessonByModuleId(moduleId: Int): Flowable<List<Lesson>>
 
+    @Query("select * from lesson")
+    fun getAllLesson(): List<Lesson>
 
     @Insert
     fun addLesson(lesson: Lesson)

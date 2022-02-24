@@ -1,18 +1,20 @@
-package com.example.pdp_online.fragments
+package com.example.pdp_online.main
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pdp_online.R
-import com.example.pdp_online.adapter.CourseAdapter
-import com.example.pdp_online.adapter.ModuleHorizAdapter
+import com.example.pdp_online.adapter.LessonHorizAdapter
 import com.example.pdp_online.database.AppDatabase
+import com.example.pdp_online.databinding.FragmentDarsBinding
 import com.example.pdp_online.databinding.FragmentHomeBinding
 import com.example.pdp_online.entity.Kurs
+import com.example.pdp_online.entity.Lesson
+import com.example.pdp_online.entity.Modul
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
@@ -24,10 +26,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
+ * Use the [DarsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class DarsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -39,37 +41,48 @@ class HomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
-    lateinit var binding: FragmentHomeBinding
+    lateinit var binding: FragmentDarsBinding
     lateinit var appDatabase: AppDatabase
-    lateinit var courseAdapter: CourseAdapter
-    lateinit var moduleHorizAdapter: ModuleHorizAdapter
+    private lateinit var lessonHorizAdapter: LessonHorizAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
+        binding = FragmentDarsBinding.inflate(layoutInflater,container,false)
         appDatabase = AppDatabase.getInstance(binding.root.context)
 
 
+        setRv()
 
 
-        courseAdapter = CourseAdapter(object:CourseAdapter.OnItemClickListener{
-            override fun onItemClick(kurs: Kurs) {
+
+        val moduler = arguments?.getSerializable("horizon") as Modul
+        binding.teksss.text = moduler.mod_name
+
+
+
+        return binding.root
+    }
+
+    private fun setRv() {
+        val moduler = arguments?.getSerializable("horizon") as Modul
+        binding.teksss.text = moduler.mod_name
+
+        lessonHorizAdapter = LessonHorizAdapter(object:LessonHorizAdapter.OnItemClickListener{
+            override fun onItemClick(lesson: Lesson) {
                 var bundle = Bundle()
-                bundle.putSerializable("main",kurs)
-                findNavController().navigate(R.id.moduleMainFragment,bundle)
+                bundle.putSerializable("dars",lesson)
+                findNavController().navigate(R.id.lessonChildFragment,bundle)
             }
 
         })
-
-        appDatabase.kursDao().getAllKurs()
+        appDatabase.lessonDao().getLessonByModuleId(moduler.id!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object: Consumer<List<Kurs>> {
-                override fun accept(t: List<Kurs>?) {
-                    courseAdapter.submitList(t)
+            .subscribe(object: Consumer<List<Lesson>> {
+                override fun accept(t: List<Lesson>?) {
+                    lessonHorizAdapter.submitList(t)
                 }
 
             }, object : Consumer<Throwable> {
@@ -78,14 +91,8 @@ class HomeFragment : Fragment() {
                 }
 
             })
-        binding.rvKurs.adapter = courseAdapter
-
-        binding.settings.setOnClickListener {
-            findNavController().navigate(R.id.settingsFragment)
-        }
-
-
-        return binding.root
+        binding.rv.setLayoutManager(GridLayoutManager(binding.root.context, 3))
+        binding.rv.adapter = lessonHorizAdapter
     }
 
     companion object {
@@ -95,12 +102,12 @@ class HomeFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
+         * @return A new instance of fragment DarsFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
+            DarsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

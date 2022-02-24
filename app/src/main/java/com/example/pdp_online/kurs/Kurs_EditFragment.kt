@@ -63,6 +63,7 @@ class Kurs_EditFragment : Fragment() {
     lateinit var currentImagePath: String
     private var fileAbsolutePath: String? = null
 
+    lateinit var kurslist: List<Kurs>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -155,12 +156,30 @@ class Kurs_EditFragment : Fragment() {
                 fileAbsolutePath = file.absolutePath
 
 
+                var same = false
                 binding.floatingActionButton.setOnClickListener {
                     val kurs = arguments?.getSerializable("key") as Kurs
-                    kurs.kr_image = fileAbsolutePath
-                    kurs.kr_name = binding.kursName.text.toString()
-                    appDatabase.kursDao().updateKurs(kurs)
-                    findNavController().popBackStack()
+                    kurslist = appDatabase.kursDao().getAllCourse() as ArrayList<Kurs>
+                    val name = binding.kursName.text.toString().trim()
+                    if (name.isNotEmpty()){
+                        for(i in 0 until kurslist.size){
+                            if (kurslist[i].kr_name == name){
+                                same = true
+                                break
+                            }
+                        }
+                        if (!same){
+                            kurs.kr_image = fileAbsolutePath
+                            kurs.kr_name = name
+                            appDatabase.kursDao().updateKurs(kurs)
+                            findNavController().popBackStack()
+                        }else{
+                            Toast.makeText(binding.root.context, "Bunday nomli kurs bor!!", Toast.LENGTH_SHORT).show()
+                            same=false
+                        }
+                    }else{
+                        Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
+                    }
                 }
 
 
@@ -236,14 +255,41 @@ class Kurs_EditFragment : Fragment() {
             val AbsolutePath = file.absolutePath
             val fileInputStream = FileInputStream(file)
 
+
+            var same = false
             binding.floatingActionButton.setOnClickListener {
                 val kurs = arguments?.getSerializable("key") as Kurs
+                kurslist = appDatabase.kursDao().getAllCourse() as ArrayList<Kurs>
                 val name = binding.kursName.text.toString().trim()
-                kurs.kr_image = AbsolutePath
-                kurs.kr_name = name
-                appDatabase.kursDao().updateKurs(kurs)
-                findNavController().popBackStack()
+                if (name.isNotEmpty()){
+                    for(i in 0 until kurslist.size){
+                        if (kurslist[i].kr_name == name){
+                            same = true
+                            break
+                        }
+                    }
+                    if (!same){
+                        kurs.kr_image = AbsolutePath
+                        kurs.kr_name = name
+                        appDatabase.kursDao().updateKurs(kurs)
+                        findNavController().popBackStack()
+                    }else{
+                        Toast.makeText(binding.root.context, "Bunday nomli kurs bor!!", Toast.LENGTH_SHORT).show()
+                        same=false
+                    }
+                }else{
+                    Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
+                }
             }
+
+
+
+
+
+
+
+
+
 
 
         }

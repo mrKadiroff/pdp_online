@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".main.ModuleMainFragment">
+
+    <TextView
+        android:id="@+id/tema"
+        android:layout_marginTop="34dp"
+        android:layout_marginStart="24sp"
+        android:textSize="30sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+android:textColor="@color/black"
+        android:textStyle=""
+        android:layout_width="wrap_content"
+        android:paddingEnd="8sp"
+        android:layout_height="wrap_content"
+        android:text="sddddddddddddddddddddsddd" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvmodule"
+        android:layout_width="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/main_modul_list"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/floatingActionButton"/>
+
+</LinearLayout>

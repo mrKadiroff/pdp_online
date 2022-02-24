@@ -9,20 +9,28 @@
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/drawable/edit_icon.xml" value="0.1155" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.163" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/drawable/ic_checked.xml" value="0.1" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/drawable/item_lesson_title_back.xml" value="0.3375" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/drawable/module_count_back.xml" value="0.236" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/drawable/settings_back.xml" value="0.236" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/activity_splash.xml" value="0.33" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/dars_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/delete_dialog.xml" value="0.25" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_add__module.xml" value="0.351010101010101" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_dars.xml" value="0.33" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_edit_module.xml" value="0.24230072463768115" />
-        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_kurs__edit.xml" value="0.31023550724637683" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_lesson.xml" value="0.33" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_lesson_child.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_lesson_edit.xml" value="0.351010101010101" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_module_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/item_card.xml" value="0.22" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/item_main.xml" value="0.25" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/kurs_list.xml" value="0.33" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/lesson_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/main_modul_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/layout/modul_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Pdp_Online/app/src/main/res/xml/file_path.xml" value="0.11388888888888889" />
       </map>

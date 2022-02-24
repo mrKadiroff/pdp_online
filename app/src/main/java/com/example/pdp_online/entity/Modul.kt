@@ -14,7 +14,7 @@ class Modul : Serializable{
     var mod_name: String? = null
 
     @ColumnInfo(name = "mo_orni")
-    var mod_position: String? = null
+    var mod_position: Int? = null
 
     @ColumnInfo(name = "mo_rasm")
     var mod_image: String? = null

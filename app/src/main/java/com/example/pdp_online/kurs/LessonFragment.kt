@@ -47,6 +47,8 @@ class LessonFragment : Fragment() {
     lateinit var binding: FragmentLessonBinding
     lateinit var appDatabase: AppDatabase
     private lateinit var lessonAdapter: LessonAdapter
+
+    lateinit var lessonlist: List<Lesson>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -120,21 +122,45 @@ class LessonFragment : Fragment() {
 
         val lesson = Lesson()
 
+        var same = false
         binding.floatingActionButton.setOnClickListener {
-            lesson.lesson_name = binding.lessonName.text.toString().trim()
-            lesson.lesson_description = binding.lessonInfo.text.toString().trim()
-            lesson.lesson_position = binding.lessonPosition.text.toString().trim()
-            lesson.lesson_image = modul.mod_image
-            lesson.lesson_modul_id = modul.id
-            Observable.fromCallable {
-                appDatabase.lessonDao().addLesson(lesson)
-            }.subscribe{
-                Toast.makeText(binding.root.context, "added", Toast.LENGTH_SHORT).show()
-                binding.lessonName.setText("")
-                binding.lessonInfo.setText("")
-                binding.lessonPosition.setText("")
+            lessonlist = appDatabase.lessonDao().getAllLesson() as ArrayList<Lesson>
+            val lessonname = binding.lessonName.text.toString().trim()
 
+
+            if (binding.lessonName.text.toString().isNotEmpty() && binding.lessonInfo.text.toString().isNotEmpty()&& binding.lessonPosition.text.toString().isNotEmpty()){
+                for (i in 0 until lessonlist.size){
+                    if (lessonlist[i].lesson_name == lessonname){
+                        same = true
+                        break
+                    }
+                }
+                if (!same){
+                    lesson.lesson_name = binding.lessonName.text.toString().trim()
+                    lesson.lesson_description = binding.lessonInfo.text.toString().trim()
+                    lesson.lesson_position = binding.lessonPosition.text.toString().toInt()
+                    lesson.lesson_image = modul.mod_image
+                    lesson.lesson_modul_id = modul.id
+                    Observable.fromCallable {
+                        appDatabase.lessonDao().addLesson(lesson)
+                    }.subscribe{
+                        Toast.makeText(binding.root.context, "added", Toast.LENGTH_SHORT).show()
+                        binding.lessonName.setText("")
+                        binding.lessonInfo.setText("")
+                        binding.lessonPosition.setText("")
+
+                    }
+                }else{
+                    Toast.makeText(binding.root.context, "Bunday nomli dars bor!!", Toast.LENGTH_SHORT).show()
+                    same=false
+                }
+            }else{
+                Toast.makeText(binding.root.context,"Ma'lumotlarni to'liq kiritmadingizku brat",Toast.LENGTH_SHORT).show()
             }
+
+
+
+
 
         }
 

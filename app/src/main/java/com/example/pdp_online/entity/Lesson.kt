@@ -17,7 +17,7 @@ class Lesson :Serializable{
     var lesson_description: String? = null
 
     @ColumnInfo(name = "dars_orni")
-    var lesson_position: String? = null
+    var lesson_position: Int? = null
 
     @ColumnInfo(name = "dars_rasm")
     var lesson_image: String? = null
